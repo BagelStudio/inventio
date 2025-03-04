@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bagel base -->
+  <circle cx="32" cy="32" r="28" fill="#E2A76F" stroke="#C68642" stroke-width="4"/>
+  <!-- Bagel hole -->
+  <circle cx="32" cy="32" r="8" fill="#F5DEB3"/>
+  <!-- Sesame seeds -->
+  <ellipse cx="16" cy="20" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="25" cy="22" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="40" cy="18" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="33" cy="12" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="50" cy="28" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="18" cy="34" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="16" cy="44" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="25" cy="50" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="36" cy="46" rx="1" ry="3" fill="#FFF8DC"/>
+  <ellipse cx="48" cy="46" rx="1" ry="3" fill="#FFF8DC"/>
+</svg>
