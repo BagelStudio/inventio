@@ -14,10 +14,13 @@ const db = new sqlite3.Database('./lostfound.db', (err) => {
     console.log('Connected to SQLite database.');
 });
 
+db.run(`DROP TABLE IF EXISTS items`);
+
 db.run(`CREATE TABLE IF NOT EXISTS items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT,
     description TEXT,
+    attributes TEXT,
     imagePath TEXT
 )`);
 
@@ -67,14 +70,23 @@ const server = createServer((req: IncomingMessage, res: ServerResponse) => {
                 res.end(JSON.stringify({ error: 'Error parsing form' }));
                 return;
             }
-            console.log(JSON.stringify(fields.description));
-            console.log(fields.description);
+
             const description = fields.description as string[];
             const image = Array.isArray(files.image) ? files.image[0] : files.image as formidable.File | undefined;
             const imagePath = image ? `/uploads/${image.newFilename}` : null;
+            console.log(fields.description);
+
+            let imageAttributes : string[] = [];
+            if (fields.attributes) {
+                imageAttributes = fields.attributes as string[];
+                console.log(fields.attributes);
+            } else {
+                console.log("No image attribures passed.");
+            }
+
             db.run(
-                `INSERT INTO items (type, description, imagePath) VALUES (?, ?, ?)`,
-                ['lost', description[0], imagePath],
+                `INSERT INTO items (type, description, attributes, imagePath) VALUES (?, ?, ?, ?)`,
+                ['lost', description[0], JSON.parse(imageAttributes[0]), imagePath],
                 (err) => {
                     if (err) {
                         res.writeHead(500, { 'Content-Type': 'application/json' });

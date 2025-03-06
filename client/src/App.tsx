@@ -1,6 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import './App.css';
+import Results from './results.tsx';
+import { generateAttributes } from './components/attribution.ts';
+
 
 interface FoundItem {
     id: number;
@@ -23,9 +26,14 @@ function App() {
         e.preventDefault();
         const formData = new FormData();
         formData.append('description', description);
-        if (image) formData.append('image', image);
+        if (image) {
+            formData.append('image', image);
+            const imageAttributes : string = await generateAttributes(image, 'llama3.2-vision');
+            formData.append('attributes', imageAttributes);
+        }
 
         try {
+            console.log("Db request sent.")
             const response = await axios.post('/lost', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
@@ -48,6 +56,8 @@ function App() {
         }
     };
 
+
+
     return (
         <div className="app">
             <h1>Lost and Found</h1>
@@ -64,7 +74,7 @@ function App() {
                 <br />
                 <label>
                     Image:
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
+                    <input type="file" accept="image/*" onChange={handleImageChange} required/>
                 </label>
                 <br />
                 <button type="submit">Submit Lost Item</button>
@@ -79,6 +89,7 @@ function App() {
             />
             <button onClick={handleSearch}>Search</button>
 
+            <Results />
             <div>
                 {results.map((item) => (
                     <div key={item.id}>
